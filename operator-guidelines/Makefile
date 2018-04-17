@@ -1,21 +1,17 @@
 SRC  := $(wildcard csd-*.adoc)
-DOC  := $(patsubst %.adoc,%.doc,$(SRC))
 XML := $(patsubst %.adoc,%.xml,$(SRC))
 HTML := $(patsubst %.adoc,%.html,$(SRC))
 
 SHELL := /bin/bash
 
-all: $(HTML) $(XML) $(DOC)
+all: $(HTML) $(XML)
 
 clean:
-	rm -f $(HTML) $(XML) $(DOC)
+	rm -f $(HTML) $(XML)
 
-%.xml %.htm %.doc: %.adoc
+%.xml %.html: %.adoc
 	bundle exec asciidoctor -b csd -r 'asciidoctor-csd' $^ --trace
 
-%.html: %.adoc
-	bundle exec asciidoctor $^ --trace
-
 open:
-	open *.html
+	open $(HTML)
 
